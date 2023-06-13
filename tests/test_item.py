@@ -47,3 +47,8 @@ def test_name():
 
     item1.name = "Телефон"
     assert item1.name == 'Телефон'
+
+def test_repr():
+    item1 = Item("Смартфон", 10000, 20)
+    assert repr(item1) == "Item('Смартфон', 10000, 20)"
+    assert str(item1) == 'Смартфон'
