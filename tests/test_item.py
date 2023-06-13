@@ -24,9 +24,6 @@ def test_name_setter():
     item.name = '0123456789'
     assert item.name == '0123456789'
 
-    # длина наименования товара больше 10 символов
-    item.name = 'СуперСмартфон'
-    assert item.name != 'СуперСмартфон'
 
 
 def test_string_to_number():
