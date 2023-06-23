@@ -1,6 +1,12 @@
 import csv
 
 import pytest
+
+
+class InstantiateCSVError(Exception):
+    pass
+
+
 class Item:
     """
     Класс для представления товара в магазине.
@@ -49,11 +55,18 @@ class Item:
     @classmethod
     def instantiate_from_csv(cls):
         """Класс-метод, инициализирующий экземпляры класса `Item` данными из файла _src/items.csv_"""
-        with open('../src/items.csv', 'r', encoding='windows-1251') as csv_file:
-            reader = csv.DictReader(csv_file)
-            for row in reader:
-                item = cls(row.get('name'), float(row.get('price')), int(row.get('quantity')))
-                cls.all.append(item)
+        try:
+            with open('../src/items.csv', 'r', encoding='windows-1251') as csv_file:
+                reader = csv.DictReader(csv_file)
+
+                for row in reader:
+                    try:
+                        item = cls(row.get('name'), float(row.get('price')), int(row.get('quantity')))
+                    except ValueError:
+                        raise InstantiateCSVError('Файл items.csv поврежден')
+                    cls.all.append(item)
+        except FileNotFoundError:
+            raise FileNotFoundError('Отсутствует файл item.csv')
 
     @property
     def name(self):
@@ -67,8 +80,6 @@ class Item:
             raise ValueError('More than 10 letters in the name')
 
 
-
     @staticmethod
     def string_to_number(nums):
         return int(float(nums))
-
