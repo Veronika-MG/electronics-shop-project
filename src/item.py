@@ -53,16 +53,16 @@ class Item:
         self.price *= self.pay_rate
 
     @classmethod
-    def instantiate_from_csv(cls):
+    def instantiate_from_csv(cls,file='../src/items.csv'):
         """Класс-метод, инициализирующий экземпляры класса `Item` данными из файла _src/items.csv_"""
         try:
-            with open('../src/items.csv', 'r', encoding='windows-1251') as csv_file:
+            with open(file, 'r', encoding='windows-1251') as csv_file:
                 reader = csv.DictReader(csv_file)
 
                 for row in reader:
                     try:
                         item = cls(row.get('name'), float(row.get('price')), int(row.get('quantity')))
-                    except ValueError:
+                    except (ValueError,TypeError) as e:
                         raise InstantiateCSVError('Файл items.csv поврежден')
                     cls.all.append(item)
         except FileNotFoundError:

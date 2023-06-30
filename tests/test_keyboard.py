@@ -18,5 +18,5 @@ def test_KeybMixin():
     KeybMixin.change_lang(k)
     assert kb._language == "RU"
     KeybMixin.change_lang()
-    assert Kb._language == "EN"
+    assert kb._language == "EN"
 

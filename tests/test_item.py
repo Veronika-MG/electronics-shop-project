@@ -35,9 +35,9 @@ def test_string_to_number():
 
 def test_instantiate_from_csv():
     with pytest.raises(InstantiateCSVError):
-        Item.instantiate_from_csv()
+       Item.instantiate_from_csv(file='../src/itemss.csv')
     with pytest.raises(FileNotFoundError):
-        Item.instantiate_from_csv()
+        Item.instantiate_from_csv(file='file_scs')
     Item.all.clear()
     try:
         Item.instantiate_from_csv()
